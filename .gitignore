@@ -30,3 +30,14 @@
 *.exe
 *.out
 *.app
+
+# Studio Code
+.vs
+.vscode
+out
+
+# Build artifacts
+build
+build.*
+bin
+bin.*
