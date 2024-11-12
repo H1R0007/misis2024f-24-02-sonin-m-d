@@ -44,5 +44,5 @@ bin.*
 
 #My ignores
 /prj.lab
-prj.test/
+prj.test
 prj.codeforces/
