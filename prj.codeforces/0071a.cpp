@@ -12,8 +12,8 @@ int main()
         if (slovo.size() > 10)
             slovo = slovo[0] + (std::to_string(slovo.size() - 2)) + slovo[slovo.size() - 1];
         std::cout << slovo << std::endl;
-        
+        //dop
     }
     return 0;
 }
- 
+ // проверка 
