@@ -41,8 +41,3 @@ build
 build.*
 bin
 bin.*
-
-#My ignores
-prj.lab
-prj.lab.*
-prj.codeforces/
