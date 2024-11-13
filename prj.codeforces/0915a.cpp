@@ -3,14 +3,14 @@
 #include <algorithm>
 
 int main() {
-	int n = 0, k = 0, mx = 0;
+	int n = 0, k = 0, mn = 100000000;
 	std::cin >> n >> k;
 	for (int i = 0; i < n; i++) {
 		int Ai = 0;
 		std::cin >> Ai;
-		if (k % Ai == 0 && k / Ai > mx) {
-			mx = k / Ai;
+		if (k % Ai == 0 && k / Ai < mn) {
+			mn = k / Ai;
 		}
 	}
-	std::cout << mx << std::endl;
+	std::cout << mn << std::endl;
 }
