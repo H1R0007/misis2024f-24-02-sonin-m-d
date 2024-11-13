@@ -14,8 +14,8 @@ public:
 
 
 	Complex& operator=(const Complex& other) { this->real = other.GetR(); this->image = other.GetI(); return *this;}
-	bool operator==(const Complex& other) { return this->real == other.GetR() and this->image == other.GetI(); }
-	bool operator!=(const Complex& other) { return this->real != other.GetR() and this->image != other.GetI(); }
+	bool operator==(const Complex& other) { return this->real == other.GetR() && this->image == other.GetI(); }
+	bool operator!=(const Complex& other) { return this->real != other.GetR() && this->image != other.GetI(); }
 	Complex& operator+(const Complex& other) { Complex answer; answer.real = this->real + other.GetR(); answer.image = this->image + other.GetI(); return answer;  }
 	Complex& operator+=(const Complex& other) { this->real += other.GetR(); this->image += other.GetI(); return *this; }
 	Complex& operator-(const Complex& other) { Complex answer; answer.real = this->real + other.GetR(); answer.image = this->image + other.GetI(); return answer; }
