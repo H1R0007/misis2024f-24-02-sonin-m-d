@@ -38,3 +38,4 @@ add_executable(2030a 2030a.cpp)
 
 add_executable(0136a 0136a.cpp)
 add_executable(0915a 0915a.cpp)
+add_executable(0935b 0935b.cpp)
