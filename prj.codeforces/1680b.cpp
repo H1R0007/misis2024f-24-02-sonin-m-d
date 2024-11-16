@@ -17,15 +17,18 @@ int main() {
 		}
 		int minx = 1000000;
 		int miny = 1000000;
-		for (int i = 0; i < n; i++) {
-			for (int i1 = 0; i1 < m; i1++) {
-				if (spis[i][i1] == 'R') {
-					minx = std::min(minx, i);
-					miny = std::min(miny, i1);
+		for (int y = 0; y < n; y++) { // строки
+			for (int x = 0; x < m; x++) { // столбцы
+				if (spis[y][x] == 'R') {
+					//std::cout << y << "- y; " << x << "- x; " << std::endl;
+					miny = std::min(miny, y); //выбор минимальной коорд. строки с R в ней
+					minx = std::min(minx, x); //выбор минимальной коорд. столбца с R в нём
 				}
 			}
 		}
-		if (spis[minx][miny] == 'R') {
+		//std::cout << minx << " - minx; " << miny << " - miny; " << std::endl;
+		//std::cout << spis[miny][minx] << " - spis[miny][minx]; " << std::endl;
+		if (spis[miny][minx] == 'R') {
 			std::cout << "YES" << std::endl;
 		}
 		else {
