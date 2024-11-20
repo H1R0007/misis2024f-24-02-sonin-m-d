@@ -2,7 +2,7 @@
  
 int main()
 {
-    int w;
+    int w = 0;
     std::cin >> w;
     if ((w >= 4) and (w % 2 == 0))
         std::cout << "YES";
