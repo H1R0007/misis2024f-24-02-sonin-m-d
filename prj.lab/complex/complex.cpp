@@ -54,7 +54,7 @@ Complex& Complex::operator*=(const double right) noexcept
 
 Complex& Complex::operator/=(const Complex& right)
 {
-	if (right.re + right.im = 0.0)
+	if (right.re + right.im == 0.0)
 	{
 		throw std::runtime_error("Error, division by zero!");
 	}
@@ -82,13 +82,13 @@ std::istream& Complex::To(std::istream& to) noexcept
 {
 	char Lbrace(0);
 	char sep(0);
-	char space(0)
-	char rBrace(0);
+	char space(0);
+	char Rbrace(0);
 	double imag(0.0);
-	double real(0.0)
-	to >> Lbrace >> real >> sep >> space >> imag >> RBrace;
+	double real(0.0);
+	to >> Lbrace >> real >> sep >> space >> imag >> Rbrace;
 	if (to.good()) {
-		if ((Complex::Lbrace == Lbrace) && (Complex::sep == sep && (Complex::space == space) && (Complex::Rbrace == Rbrace)) {
+		if ((Complex::Lbrace == Lbrace) && (Complex::sep == sep) && (Complex::space == space) && (Complex::Rbrace == Rbrace)) {
 			re = real;
 			im = imag;
 		}
