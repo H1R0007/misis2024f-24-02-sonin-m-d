@@ -2,7 +2,7 @@
  
 int main()
 {
-    int n, itog;
+    int n = 0, itog = 0;
     std::cin >> n;
     for (int i = 0; i < n; i++)
     {

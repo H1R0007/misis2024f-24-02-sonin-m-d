@@ -1,39 +1,117 @@
+#include "complex.hpp"
+#include <limits>
 #include <iostream>
-#include <sstream>
 
-class Complex {
-public:
-
-	double real;
-	double image;
-
-	Complex(double r = 0.0, double i = 0.0) : real(r), image(i) {}
-
-	double GetR() const { return real; }
-	double GetI() const { return image; }
-
-
-	Complex& operator=(const Complex& other) { this->real = other.GetR(); this->image = other.GetI(); return *this;}
-	bool operator==(const Complex& other) { return this->real == other.GetR() && this->image == other.GetI(); }
-	bool operator!=(const Complex& other) { return this->real != other.GetR() && this->image != other.GetI(); }
-	Complex& operator+(const Complex& other) { Complex answer; answer.real = this->real + other.GetR(); answer.image = this->image + other.GetI(); return answer;  }
-	Complex& operator+=(const Complex& other) { this->real += other.GetR(); this->image += other.GetI(); return *this; }
-	Complex& operator-(const Complex& other) { Complex answer; answer.real = this->real + other.GetR(); answer.image = this->image + other.GetI(); return answer; }
-	Complex& operator-=(const Complex& other) { this->real -= other.GetR(); this->image -= other.GetI(); return *this; }
-	Complex& operator*(const Complex& other) { Complex answer; answer.real = this->real * other.GetR() - this->image * other.GetI(); answer.image = this->real * other.GetI() + this->image * other.GetR(); return answer; }
-	Complex& operator*=(const Complex& other) { double a1 = this->real * other.GetR() - this->image * other.GetI(); double a2 = this->real * other.GetI() + this->image * other.GetR(); this->real = a1; this->image = a2; return *this; }
-	Complex& operator/(const Complex& other) { Complex answer; answer.real = (this->real * other.GetR() + this->image + other.GetI()) / (other.GetR() * other.GetR() + other.GetI() * other.GetI()); answer.image = (this->image * other.GetR() - this->real * other.GetI()) / (other.GetR() * other.GetR() + other.GetI() * other.GetI()); return answer; }
-	Complex& operator/=(const Complex& other) { double a1 = other.GetR() * other.GetR() + other.GetI() * other.GetI(); double a2 = this->real * other.GetR() + this->image * other.GetI(); double a3 = this->image * other.GetI() - this->real * other.GetR(); this->real = a2 / a1; this->image = a3 / a1; return *this; }
-	~Complex(){}
-};
-
-std::ostream& operator<<(std::ostream& enter, Complex& thing){
-	enter << thing.real;
-	if (thing.GetI() < 0.0){ enter << " - " << thing.GetI() * (-1) << "i"; }
-	else{ enter << " + " << thing.GetI() << "i"; }
-	return enter;
+bool Complex::operator==(const Complex& right) const noexcept
+{
+	double O = std::numeric_limits<double>::epsilon();
+	return (abs(re - right.re < 2 * O) && abs(im - right.im < 2 * O));
 }
-std::istream& operator>>(std::istream& output, Complex& thing){
-	output >> thing.real >> thing.image;
-	return output;
+bool Complex::operator!=(const Complex& right) const noexcept
+{
+	return !(operator==(const Complex(right)));
 }
+
+Complex Complex::operator-() const noexcept
+{
+	return Complex(-re, -im);
+}
+
+Complex& Complex::operator+=(const Complex& right) noexcept
+{
+	re += right.re;
+	im += right.im;
+	return *this;
+}
+Complex& Complex::operator+=(const double right) noexcept
+{
+	return operator+=(Complex(right));
+}
+
+Complex& Complex::operator-=(const Complex& right) noexcept
+{
+	re -= right.re;
+	im -= right.im;
+	return *this;
+}
+Complex& Complex::operator-=(const double right) noexcept
+{
+	return operator-=(Complex(right));
+}
+
+Complex& Complex::operator*=(const Complex& right) noexcept
+{
+	re = re * right.re - im * right.im;
+	im = re * right.im + im * right.re;
+	return *this;
+}
+Complex& Complex::operator*=(const double right) noexcept
+{
+	re *= right;
+	im *= right;
+	return *this;
+}
+
+Complex& Complex::operator/=(const Complex& right)
+{
+	if (right.re + right.im = 0.0)
+	{
+		throw std::runtime_error("Error, division by zero!");
+	}
+	re = (re * right.re + im * right.im) / (right.re * right.re + right.im * right.im);
+	im = (im * right.re - re * right.im) / (right.re * right.re + right.im * right.im);
+	return *this;
+}
+Complex& Complex::operator/=(const double right)
+{
+	if (right == 0.0)
+	{
+		throw std::runtime_error("Error, division by zero!");
+	}
+	re /= right;
+	im /= right;
+	return *this;
+}
+
+std::ostream& Complex::Out(std::ostream& out) const noexcept
+{
+	out << Lbrace << re << sep << space << im << Rbrace;
+	return out;
+}
+std::istream& Complex::To(std::istream& to) noexcept
+{
+	char Lbrace(0);
+	char sep(0);
+	char space(0)
+	char rBrace(0);
+	double imag(0.0);
+	double real(0.0)
+	to >> Lbrace >> real >> sep >> space >> imag >> RBrace;
+	if (to.good()) {
+		if ((Complex::Lbrace == Lbrace) && (Complex::sep == sep && (Complex::space == space) && (Complex::Rbrace == Rbrace)) {
+			re = real;
+			im = imag;
+		}
+		else {
+			to.setstate(std::ios_base::failbit);
+		}
+	}
+	return to;
+}
+
+
+Complex operator+(const Complex& left, const Complex& right) noexcept { return Complex(left) += right; }
+Complex operator+(const Complex& left, const double right) noexcept { return Complex(left) += right; }
+Complex operator+(const double left, const Complex& right) noexcept { return Complex(left) += right; }
+
+Complex operator-(const Complex& left, const Complex& right) noexcept { return Complex(left) -= right; }
+Complex operator-(const Complex& left, const double right) noexcept { return Complex(left) -= right; }
+Complex operator-(const double left, const Complex& right) noexcept { return Complex(left) -= right; }
+
+Complex operator*(const Complex& left, const Complex& right) noexcept { return Complex(left) *= right; }
+Complex operator*(const Complex& left, const double right) noexcept { return Complex(left) *= right; }
+Complex operator*(const double left, const Complex& right) noexcept { return Complex(left) *= right; }
+
+Complex operator/(const Complex& left, const Complex& right) { return Complex(left) /= right; }
+Complex operator/(const Complex& left, const double right) { return Complex(left) /= right; }
+Complex operator/(const double left, const Complex& right) { return Complex(left) /= right; }
