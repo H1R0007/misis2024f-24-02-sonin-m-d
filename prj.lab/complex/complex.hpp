@@ -71,11 +71,11 @@ struct Complex {
 [[nodiscard]] Complex operator/(const Complex& left, const double right);
 [[nodiscard]] Complex operator/(const double left, const Complex& right);
 
-inline std::ostream& operator<<(std::ostream& ostrm, const Complex& right) noexcept {
+inline std::ostream& operator<<(std::ostream& out, const Complex& right) noexcept {
 	return right.Out(out);
 }
 
-inline std::istream& operator>>(std::istream& istrm, Complex& right) noexcept {
+inline std::istream& operator>>(std::istream& to, Complex& right) noexcept {
 	return right.To(to);
 }
 #endif

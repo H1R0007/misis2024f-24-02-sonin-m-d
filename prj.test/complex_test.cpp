@@ -1,4 +1,4 @@
-#include "complex.hpp"
+#include <complex/complex.hpp>
 #include <iostream>
 #include <sstream>
 
@@ -89,20 +89,20 @@ int main() {
 	io_test();
 
 	min_cc_test(x, y);
-	min_cd_test(x.c);
-	min_dc_test(c, x);
+	min_cd_test(x, z);
+	min_dc_test(z, x);
 
 	plus_cc_test(x, y);
-	plus_cd_test(x, c);
-	plus_dc_test(c, x);
+	plus_cd_test(x, z);
+	plus_dc_test(z, x);
 
 	mult_cc_test(x, y);
-	mult_cd_test(x, c);
-	mult_dc_test(c, x);
+	mult_cd_test(x, z);
+	mult_dc_test(z, x);
 
 	del_cc_test(x, y);
-	del_cd_test(x, c);
-	del_dc_test(c, x);
+	del_cd_test(x, z);
+	del_dc_test(z, x);
 
 
 
