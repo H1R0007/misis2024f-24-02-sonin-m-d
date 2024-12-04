@@ -4,12 +4,12 @@
 
 bool Complex::operator==(const Complex& right) const noexcept
 {
-	double O = std::numeric_limits<double>::epsilon();
+	double constexpr O = std::numeric_limits<double>::epsilon();
 	return (abs(re - right.re < 2 * O) && abs(im - right.im < 2 * O));
 }
 bool Complex::operator!=(const Complex& right) const noexcept
 {
-	return !(operator==(const Complex(right)));
+	return !(operator==(Complex(right)));
 }
 
 Complex Complex::operator-() const noexcept
