@@ -1,44 +1,142 @@
-#import <iostream>
-#import <sstream>
+#include <rational/rational.hpp>
+#include <iostream>
+#include <stdexcept>
+#include <math.h>
 
-struct Fractional
-{
-	double chisl;
-	double znam;
-	
-	Fractional(double ch = 0.0, double zn = 0.0) : chisl(ch), znam(zn);
-
-	double GetC() const { return chisl; }
-	double GetZ() const { return znam; }
-
-	Fractional& operator=(const Fractional& other) {this->chisl = other.chisl; this->znam = other.znam; return *this; }
-	bool operator==(const Fractional& other) { return this->chisl == other.chisl && this->znam == other.znam; }
-	bool operator!=(const Fractional& other) { return !(this->chisl == other.chisl && this->znam == other.znam); }
-	Fractional operator+(const Fractional& other) { Fractional temp; double numerator = this->chisl, denominator = this->znam; tem = numerator * other.znam + denominator * other. temp.znam = denominator * other.znam; return temp; }
-	Fractional operator-(const Fractional& other) { Fractional temp; double numerator = this->chisl, denominator = this->znam; temp.chisl = numerator * other.znam - denominator * other.nr;temp.znam = denominator * other.znam; return temp; }
-	Fractional operator*(const Fractional& other) { Fractional temp; double numerator = this->chisl, denominator = this->znam; temp.chisl = numerator * other.chisl; temp.znam = denominator * other.znam; return temp; }
-	Fractional operator/(const Fractional& other) { Fractional temp; double numerator = this->chisl, denominator = this->znam; temp.chisl = numerator * other.znam;temp.znam = denominator * other.chisl; return temp; }
-	Fractional& operator+=(const Fractional& other) { double numerator = this->chisl, denominator = this->znam; this->nr = numerator * other.znam + denominator * other.chisl; this->znam = denominator * other.znam; return *this; }
-	Fractional& operator-=(const Fractional& other) { double numerator = this->chisl, denominator = this->znam; this->chisl = numerator * other.znam - denominator * other.chisl;this->znam = denominator * other.znam; return *this; }
-	Fractional& operator*=(const Fractional& other) { double numerator = this->chisl, denominator = this->znam; this->chisl = numerator * other.chisl; this->znam = denominator * other.znam; return *this; }
-	Fractional& operator/=(const Fractional& other) { double numerator = this->chisl, denominator = this->znam; this->chisl = numerator * other.znam; this->znam = denominator * other.chisl; return *this; }
-	~Fractional(){ }
-};
-
-std::ostream& operator<<(std::ostream& os, Fractional& number)
-{
-	if (number.znam == 0)
-	{
-		os << number.chisl << "/" << number.znam << "Деление на ноль!";
+Rational::Rational(const std::int32_t chisl, const std::int32_t znam) : chisl_(chisl), znam_(znam) {
+	if (znam_ == 0) {
+		throw std::invalid_argument("Zero denumenator in rational ctor");
 	}
-	else
-	{
-		os << number.chisl << "/" << number.znam << " = " << number.nr / number.znam;
-	}
-	return os;
+	Norm();
 }
-std::istream& operator>>(std::istream& is, Fractional& number)
-{
-	is >> number.chisl >> number.znam;
-	return is;
+
+void Rational::Norm() noexcept {}
+
+bool Rational::operator==(const Rational& right) const noexcept {
+	return std::max(chisl_, right.chisl_) / std::min(chisl_, right.chisl_) == std::max(znam_, right.znam_) / std::min(znam_, right.znam_);
+}
+
+bool Rational::operator!=(const Rational& right) const noexcept {
+	return !(operator==(Rational(right)));
+}
+
+bool Rational::operator>(const Rational& right) const noexcept {
+	return chisl_ / znam_ > right.chisl_ / right.znam_;
+}
+
+bool Rational::operator<(const Rational& right) const noexcept {
+	return chisl_ / znam_ < right.chisl_ / right.znam_;
+}
+
+bool Rational::operator>=(const Rational& right) const noexcept {
+	return chisl_ / znam_ >= right.chisl_ / right.znam_;
+}
+
+bool Rational::operator<=(const Rational& right) const noexcept {
+	return chisl_ / znam_ <= right.chisl_ / right.znam_;
+}
+
+Rational& Rational::operator+=(const Rational& right) noexcept {
+	if (znam_ == right.znam_) {
+		chisl_ += right.chisl_;
+	}
+	else {
+		chisl_ = chisl_ * right.znam_ + right.chisl_ * znam_;
+		znam_ = znam_ * right.znam_;
+	}
+	return *this;
+}
+
+Rational& Rational::operator+=(const std::int32_t right) {
+	return operator+=(Rational(right));
+ }
+
+Rational& Rational::operator-=(const Rational& right) noexcept {
+	if (znam_ == right.znam_) {
+		chisl_ -= right.chisl_;
+	}
+	else {
+		chisl_ = chisl_ * right.znam_ - right.chisl_ * znam_;
+		znam_ = znam_ * right.znam_;
+	}
+	return *this;
+}
+
+Rational& Rational::operator-=(const std::int32_t right) {
+	return operator-=(Rational(right));
+}
+
+Rational& Rational::operator*=(const Rational& right) noexcept {
+	chisl_ *= right.chisl_;
+	znam_ *= right.znam_;
+	return *this;
+}
+
+Rational& Rational::operator*=(const std::int32_t right) {
+	return operator*=(Rational(right));
+}
+
+Rational& Rational::operator/=(const Rational& right) {
+	if (znam_ == 0) {
+		throw std::runtime_error("Error, division by zero!");
+	}
+	else {
+		chisl_ *= right.znam_;
+		znam_ *= right.chisl_;
+	}
+	return *this;
+ }
+
+Rational& Rational::operator/=(const std::int32_t right) {
+	return operator/=(Rational(right));
+}
+
+Rational operator+(const Rational& left, const Rational& right) noexcept { return Rational(left) += right; }
+Rational operator+(const std::int32_t left, const Rational& right) noexcept { return Rational(left) += right; }
+Rational operator+(const Rational& left, const std::int32_t right) noexcept { return Rational(left) += right; }
+
+Rational operator-(const Rational& left, const Rational& right) noexcept { return Rational(left) -= right; }
+Rational operator-(const std::int32_t left, const Rational& right) noexcept { return Rational(left) -= right; }
+Rational operator-(const Rational& left, const std::int32_t right) noexcept { return Rational(left) -= right; }
+
+Rational operator*(const Rational& left, const Rational& right) noexcept { return Rational(left) *= right; }
+Rational operator*(const std::int32_t left, const Rational& right) noexcept { return Rational(left) *= right; }
+Rational operator*(const Rational& left, const std::int32_t right) noexcept { return Rational(left) *= right; }
+
+Rational operator/(const Rational& left, const Rational& right) { return Rational(left) /= right; }
+Rational operator/(const std::int32_t left, const Rational& right) { return Rational(left) /= right; }
+Rational operator/(const Rational& left, const std::int32_t right) { return Rational(left) /= right; }
+
+std::istream& operator>>(std::istream& to, Rational& right) noexcept {
+	std::int32_t chisl(0);
+	std::int32_t znam(1);
+	char sep(0);
+	to >> chisl >> sep >> znam;
+	if (to.good()) {
+		if (Rational::Getsep() == sep) {
+			if (znam < 0) {
+				znam = -znam;
+				chisl = -chisl;
+			}
+			if (znam == 0) {
+				throw std::runtime_error("Error, division by zero!");
+			}
+			right.chisl(chisl);
+			right.znam(znam);
+		}
+		else {
+			to.setstate(std::ios_base::failbit);
+		}
+		return to;
+	}
+}
+
+std::ostream& operator<<(std::ostream& out, const Rational& right) noexcept {
+	if (right.Getchisl() == 0) {
+		out << 0;
+	}
+	else {
+		out << right.Getchisl() << right.Getsep() << right.Getznam();
+	}
+	return out;
 }
