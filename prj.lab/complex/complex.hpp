@@ -67,9 +67,9 @@ struct Complex {
 [[nodiscard]] Complex operator*(const Complex& left, const double right) noexcept;
 [[nodiscard]] Complex operator*(const double left, const Complex& right) noexcept;
 
-[[nodiscard]] Complex operator/(const Complex& left, const Complex& right);
-[[nodiscard]] Complex operator/(const Complex& left, const double right);
-[[nodiscard]] Complex operator/(const double left, const Complex& right);
+Complex operator/(const Complex& left, const Complex& right);
+Complex operator/(const Complex& left, const double right);
+Complex operator/(const double left, const Complex& right);
 
 inline std::ostream& operator<<(std::ostream& out, const Complex& right) noexcept {
 	return right.Out(out);

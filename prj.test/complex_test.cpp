@@ -7,7 +7,7 @@ void static io_test() {
 	std::ostringstream out;
 	std::istringstream to("{8, 7}");
 	out << a;
-	to << a1;
+	to >> a1;
 	if (out.str() == "{0, 0}" && a1.im == 7 && a1.re == 8) {
 		std::cout << "Input success!" << std::endl;
 		std::cout << "Output success!" << std::endl;
@@ -81,6 +81,28 @@ void static del_dc_test(double x, Complex y)
 	if (x / y == a) std::cout << x << " / " << y << " = " << a << std::endl;
 }
 
+void static otric_test(Complex x) 
+{
+	Complex a(-x.re, -x.im);
+	if (a == -x) std::cout << x << " => " << a << std::endl;
+}
+
+void static identific_test(Complex x)
+{
+	Complex a = x;
+	if (a == x) std::cout << x << " = " << a << std::endl;
+}
+
+void static ravn_cc_test(Complex x, Complex y)
+{
+	if (x == y) std::cout << x << " == " << y << std::endl;
+}
+
+void static NEravn_cc_test(Complex x, Complex y)
+{
+	if (x != y) std::cout << x << " != " << y << std::endl;
+}
+
 int main() {
 	Complex x(2.2, -8.6);
 	Complex y(-3.0, -8.9);
@@ -104,8 +126,17 @@ int main() {
 	del_cd_test(x, z);
 	del_dc_test(z, x);
 
+	otric_test(x);
+	otric_test(y);
+
+	identific_test(x);
+	identific_test(y);
+
+	ravn_cc_test(x, y);
+	NEravn_cc_test(x, y);
 
 
+	y = {0, 0};
 	try {
 		x / y;
 	}
