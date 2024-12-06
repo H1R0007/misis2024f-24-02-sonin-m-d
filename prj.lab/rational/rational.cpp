@@ -5,7 +5,7 @@
 
 Rational::Rational(const std::int32_t chisl, const std::int32_t znam) : chisl_(chisl), znam_(znam) {
 	if (znam_ == 0) {
-		throw std::invalid_argument("Zero denumenator in rational ctor");
+		throw std::invalid_argument("Error, division by zero!");
 	}
 	Norm();
 }
@@ -140,3 +140,4 @@ std::ostream& operator<<(std::ostream& out, const Rational& right) noexcept {
 	}
 	return out;
 }
+//

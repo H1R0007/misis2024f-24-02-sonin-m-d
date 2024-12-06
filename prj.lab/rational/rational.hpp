@@ -24,8 +24,8 @@ public:
 
 	explicit Rational(const std::int32_t chisl) noexcept : chisl_(chisl) {}
 
-	//Rational(Rational&&) = default;
-	//Rational operator=(Rational&&) = default;
+	Rational(Rational&&) = default;
+	Rational& operator=(Rational&&) = default;
 
 	Rational& operator=(const Rational&) = default;
 
@@ -38,23 +38,32 @@ public:
 	[[nodiscard]] void znam(std::int32_t znam) { znam_ = znam; }
 
 	[[nodiscard]] bool operator==(const Rational& right) const noexcept;
+	[[nodiscard]] bool operator==(const int32_t rhs) const noexcept;
 	[[nodiscard]] bool operator!=(const Rational& right) const noexcept;
+	[[nodiscard]] bool operator!=(const int32_t rhs) const noexcept;
 	[[nodiscard]] bool operator<(const Rational& right) const noexcept;
+	[[nodiscard]] bool operator<(const int32_t rhs) const noexcept;
 	[[nodiscard]] bool operator>(const Rational& right) const noexcept;
+	[[nodiscard]] bool operator>(const int32_t rhs) const noexcept;
 	[[nodiscard]] bool operator>=(const Rational& right) const noexcept;
+	[[nodiscard]] bool operator>=(const int32_t rhs) const noexcept;
 	[[nodiscard]] bool operator<=(const Rational& right) const noexcept;
+	[[nodiscard]] bool operator<=(const int32_t rhs) const noexcept;
 
 	[[nodiscard]] Rational& operator+=(const Rational& right) noexcept;
 	[[nodiscard]] Rational& operator-=(const Rational& right) noexcept;
 	[[nodiscard]] Rational& operator*=(const Rational& right) noexcept;
 	[[nodiscard]] Rational& operator/=(const Rational& right);
 
-	[[nodiscard]] Rational& operator+=(const std::int32_t right) noexcept;
-	[[nodiscard]] Rational& operator-=(const std::int32_t right) noexcept;
-	[[nodiscard]] Rational& operator*=(const std::int32_t right) noexcept;
-	[[nodiscard]] Rational& operator/=(const std::int32_t right);
+	[[nodiscard]] Rational& operator+=(const std::int32_t right) noexcept { return operator+=(Rational(right)); }
+	[[nodiscard]] Rational& operator-=(const std::int32_t right) noexcept { return operator-=(Rational(right)); }
+	[[nodiscard]] Rational& operator*=(const std::int32_t right) noexcept { return operator*=(Rational(right)); };
+	[[nodiscard]] Rational& operator/=(const std::int32_t right) { return operator/=(Rational(right)); }
 
 	[[nodiscard]] Rational operator-() const noexcept { return { -chisl_, -znam_ }; }
+
+	std::ostream& WriteTostream(std::ostream& Wtostream) const noexcept;
+	std::istream& ReadFromstream(std::istream& Rfromstream) noexcept;
 };
 
 [[nodiscard]] Rational operator+(const Rational& left, const Rational& right) noexcept;
@@ -73,8 +82,12 @@ public:
 [[nodiscard]] Rational operator/(const Rational& left, const int32_t right);
 [[nodiscard]] Rational operator/(const int32_t left, const Rational& right);
 
-inline static std::ostream& operator<<(std::ostream& out, const Rational& right) noexcept;
+inline static std::ostream& operator<<(std::ostream& Wtostream, const Rational& right) noexcept {
+	return right.WriteTostream(Wtostream);
+}
 
-inline static std::istream& operator>>(std::istream& to, Rational& right) noexcept;
+inline static std::istream& operator>>(std::istream& Rfromstream, Rational& right) noexcept {
+	return right.ReadFromstream(Rfromstream);
+}
 
-#endif
+#endif //

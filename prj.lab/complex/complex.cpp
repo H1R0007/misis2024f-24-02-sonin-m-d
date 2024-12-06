@@ -2,19 +2,15 @@
 #include <limits>
 #include <iostream>
 
-bool Complex::operator==(const Complex& right) const noexcept
+static const double epsilon = 2 * std::numeric_limits<double>::epsilon();
+
+bool Complex::operator==(const Complex& right) noexcept
 {
-	double constexpr O = std::numeric_limits<double>::epsilon();
-	return (abs(re - right.re < 2 * O) && abs(im - right.im < 2 * O));
+	return (abs(re - right.re < epsilon) && abs(im - right.im < epsilon));
 }
-bool Complex::operator!=(const Complex& right) const noexcept
+bool Complex::operator!=(const Complex& right) noexcept
 {
 	return !(operator==(Complex(right)));
-}
-
-Complex Complex::operator-() const noexcept
-{
-	return Complex(-re, -im);
 }
 
 Complex& Complex::operator+=(const Complex& right) noexcept
@@ -73,32 +69,30 @@ Complex& Complex::operator/=(const double right)
 	return *this;
 }
 
-std::ostream& Complex::Out(std::ostream& out) const noexcept
+std::ostream& Complex::WriteToStream(std::ostream& Wtostream) const noexcept
 {
-	out << Lbrace << re << sep << space << im << Rbrace;
-	return out;
+	Wtostream << Lbrace << re << sep << im << Rbrace;
+	return Wtostream;
 }
-std::istream& Complex::To(std::istream& to) noexcept
+std::istream& Complex::ReadFromStream(std::istream& Rfromstream) noexcept
 {
 	char Lbrace(0);
 	char sep(0);
-	char space(0);
 	char Rbrace(0);
 	double imag(0.0);
 	double real(0.0);
-	to >> Lbrace >> real >> sep >> space >> imag >> Rbrace;
-	if (to.good()) {
-		if ((Complex::Lbrace == Lbrace) && (Complex::sep == sep) && (Complex::space == space) && (Complex::Rbrace == Rbrace)) {
+	Rfromstream >> Lbrace >> real >> sep >> imag >> Rbrace;
+	if (Rfromstream.good()) {
+		if ((Complex::Lbrace == Lbrace) && (Complex::sep == sep) && (Complex::Rbrace == Rbrace)) {
 			re = real;
 			im = imag;
 		}
 		else {
-			to.setstate(std::ios_base::failbit);
+			Rfromstream.setstate(std::ios_base::failbit);
 		}
 	}
-	return to;
+	return Rfromstream;
 }
-
 
 Complex operator+(const Complex& left, const Complex& right) noexcept { return Complex(left) += right; }
 Complex operator+(const Complex& left, const double right) noexcept { return Complex(left) += right; }
@@ -115,3 +109,5 @@ Complex operator*(const double left, const Complex& right) noexcept { return Com
 Complex operator/(const Complex& left, const Complex& right) { return Complex(left) /= right; }
 Complex operator/(const Complex& left, const double right) { return Complex(left) /= right; }
 Complex operator/(const double left, const Complex& right) { return Complex(left) /= right; }
+
+//

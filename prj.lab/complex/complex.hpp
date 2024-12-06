@@ -24,7 +24,6 @@ struct Complex {
 	Complex(const double real, const double imaginary) : re(real), im(imaginary) { }
 
 	explicit Complex(const double real) : re(real) { }
-	//
 
 	Complex& operator=(const Complex&) = default;
 	Complex& operator=(Complex&&) = default;
@@ -42,16 +41,15 @@ struct Complex {
 	Complex& operator/=(const Complex& right);
 	Complex& operator/=(const double right);
 
-	[[nodiscard]] Complex operator-() const noexcept;
-	[[nodiscard]] bool operator==(const Complex& right) const noexcept;
-	[[nodiscard]] bool operator!=(const Complex& right) const noexcept;
+	[[nodiscard]] Complex operator-() const noexcept { return Complex(-re, -im); }
+	[[nodiscard]] bool operator==(const Complex& right) noexcept;
+	[[nodiscard]] bool operator!=(const Complex& right) noexcept;
 
-	[[nodicard]] std::ostream& Out(std::ostream& out) const noexcept;
-	[[nodicard]] std::istream& To(std::istream& to) noexcept;
+	[[nodicard]] std::ostream& WriteToStream(std::ostream& Wtostream) const noexcept;
+	[[nodicard]] std::istream& ReadFromStream(std::istream& Rfromstream) noexcept;
 
 	static const char Lbrace{ '{' };
 	static const char sep{ ',' };
-	static const char space{ ' ' };
 	static const char Rbrace{ '}' };
 };
 
@@ -71,11 +69,11 @@ Complex operator/(const Complex& left, const Complex& right);
 Complex operator/(const Complex& left, const double right);
 Complex operator/(const double left, const Complex& right);
 
-inline std::ostream& operator<<(std::ostream& out, const Complex& right) noexcept {
-	return right.Out(out);
+inline std::ostream& operator<<(std::ostream& Wtostream, const Complex& right) noexcept {
+	return right.WriteToStream(Wtostream);
 }
 
-inline std::istream& operator>>(std::istream& to, Complex& right) noexcept {
-	return right.To(to);
+inline std::istream& operator>>(std::istream& Rfromstream, Complex& right) noexcept {
+	return right.ReadFromStream(Rfromstream);
 }
-#endif
+#endif //
