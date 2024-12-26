@@ -67,7 +67,7 @@ Release/D:/projects/2024-misis-fall/misis2024f-24-02-sonin-m-d/bin.check/doctest
 
 0% tests passed, 8 tests failed out of 8
 
-Total Test time (real) =   0.02 sec
+Total Test time (real) =   0.03 sec
 
 The following tests FAILED:
 	  1 - doctest_arrayd (Not Run)
