@@ -12,8 +12,8 @@ private:
 	std::int32_t znam_ = 1;
 	static const char sep_ = '/';
 
-	void static Norm() noexcept;
-
+	void DoRightSign() noexcept;
+	void FractionReduce() noexcept;
 
 public:
 	Rational() = default;
@@ -25,6 +25,7 @@ public:
 	explicit Rational(const std::int32_t chisl) noexcept : chisl_(chisl) {}
 
 	Rational(Rational&&) = default;
+
 	Rational& operator=(Rational&&) = default;
 
 	Rational& operator=(const Rational&) = default;
