@@ -1,2 +1,2 @@
-add_library(queuea queue.cpp queue.hpp)
+add_library(queue queue.cpp queue.hpp)
 set_property(TARGET queue PROPERTY CXX_STANDARD 20)
