@@ -35,5 +35,4 @@ private:
 	std::ptrdiff_t capacity_ = 0;  //!< размер буффера
 	std::ptrdiff_t size_ = 0;      //!< число элементов в массиве
 	double* data_ = nullptr;             //!< буффер
-	double def_value = 0;
 };

@@ -36,7 +36,7 @@ private:
 	T* data_ = nullptr;        //!< 
 	std::ptrdiff_t head_ = -1; //!< 
 	std::ptrdiff_t tail_ = -1; //!< 
-private:
+
 	std::ptrdiff_t Count() const;
 	void Swap(QueueA&& src) noexcept;
 };
