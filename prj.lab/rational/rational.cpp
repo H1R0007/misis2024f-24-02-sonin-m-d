@@ -1,9 +1,7 @@
 #include <rational/rational.hpp>
 #include <iostream>
 #include <stdexcept>
-#include <math.h>
 
-// наибольший общий делитель
 int32_t static GCD(const int32_t left, const int32_t right) noexcept {
 	if (left % right == 0) {
 		return right;
@@ -103,7 +101,7 @@ Rational& Rational::operator+=(const Rational& right) noexcept {
 		chisl_ = chisl_ * (lcm / znam_) + right.chisl_ * (lcm / right.znam_);
 		znam_ = lcm;
 	}
-	FractionReduce(); // Убеждаемся, что результат упрощен
+	FractionReduce();
 	return *this;
 }
 

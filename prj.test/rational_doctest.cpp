@@ -2,7 +2,7 @@
 #include "doctest.h"
 #include <rational/rational.hpp>
 
-bool TestParse(const std::string& str) {
+bool read_test(const std::string& str) {
     std::istringstream istrm(str);
     Rational q;
     istrm >> q;
@@ -16,13 +16,13 @@ bool TestParse(const std::string& str) {
     return stream_good;
 }
 TEST_CASE("rational input") {
-    CHECK(TestParse("1/0") == false);
-    CHECK(TestParse("1/2"));
-    CHECK(TestParse(" 1/2"));
-    CHECK(TestParse("1/2 "));
-    CHECK(TestParse(" 1/2 "));
-    CHECK(TestParse(" 1 /2 ") == false);
-    CHECK(TestParse(" 1/ 2 ") == false);
+    CHECK(read_test("1/0") == false);
+    CHECK(read_test("1/2"));
+    CHECK(read_test(" 1/2"));
+    CHECK(read_test("1/2 "));
+    CHECK(read_test(" 1/2 "));
+    CHECK(read_test(" 1 /2 ") == false);
+    CHECK(read_test(" 1/ 2 ") == false);
 }
 
 TEST_CASE("Testing the constructor and exceptions") {
@@ -34,7 +34,7 @@ TEST_CASE("Testing the constructor and exceptions") {
     CHECK(3 == r_int.Getchisl());
     CHECK(1 == r_int.Getznam());
 
-    CHECK_THROWS(Rational(1, 0));  // Проверка на исключение деления на ноль
+    CHECK_THROWS(Rational(1, 0));
     CHECK_NOTHROW(Rational(1, 2)); // Корректное создание дроби 1/2
 }
 
