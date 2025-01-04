@@ -12,3 +12,9 @@ target_link_libraries(complex_doctest complex)
 
 add_executable(rational_doctest rational_doctest.cpp)
 target_link_libraries(rational_doctest rational)
+
+add_executable(queue_doctest queue_doctest.cpp)
+target_link_libraries(queue_doctest queue)
+
+add_executable(stackl_doctest stackl_doctest.cpp)
+target_link_libraries(stackl_doctest stackl)

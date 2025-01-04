@@ -1,4 +1,4 @@
-#include "queue.hpp"
+#include <queue/queue.hpp>
 
 #include <algorithm>
 #include <stdexcept>
@@ -61,7 +61,7 @@ QueueA::QueueA(QueueA&& src) noexcept {
     Swap(std::move(src));
 }
 
-QueueA& QueueA::operator=(QueueA&& src) noexcept {
+QueueA& QueueA::operator=(QueueA&& src) {
     if (this != &src) {
         Swap(std::move(src));
     }

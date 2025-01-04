@@ -1,5 +1,4 @@
 #pragma once
-
 #include <cstddef>
 #include <memory>
 #include <stdexcept>
@@ -28,18 +27,24 @@ public:
     void Remove(const std::ptrdiff_t idx);
 
 private:
-    std::ptrdiff_t capacity_ = 0; 
-    std::ptrdiff_t size_ = 0;      
-    std::unique_ptr<T[]> data_;      
+    std::ptrdiff_t capacity_ = 0;  
+    std::ptrdiff_t size_ = 0;     
+    std::unique_ptr<T[]> data_;    
+};
 
 
 template<class T>
-ArrayT<T>::ArrayT(const ArrayT<T>& src): capacity_(src.size_), size_(capacity_), data_(std::make_unique<T[]>(src.size_)) {
+ArrayT<T>::ArrayT(const ArrayT<T>& src)
+    : capacity_(src.size_)
+    , size_(capacity_)
+    , data_(std::make_unique<T[]>(src.size_)) {
     std::copy(src.data_.get(), src.data_.get() + size_, data_.get());
 }
 
 template<class T>
-ArrayT<T>::ArrayT(const std::ptrdiff_t size) : capacity_(size), size_(size) {
+ArrayT<T>::ArrayT(const std::ptrdiff_t size)
+    : capacity_(size)
+    , size_(size) {
     if (size_ <= 0) {
         throw std::invalid_argument("ArrayT::ArrayT - non positive size");
     }
@@ -59,7 +64,7 @@ ArrayT<T>& ArrayT<T>::operator=(const ArrayT<T>& rhs) {
 template<class T>
 T& ArrayT<T>::operator[](const std::ptrdiff_t idx) {
     if (idx < 0 || size_ <= idx) {
-        throw std::invalid_argument("ArrayT::operator[] - invalid index");
+        throw std::invalid_argument("ArrayD::operator[] - invalid index");
     }
     return *(data_.get() + idx);
 }
@@ -67,7 +72,7 @@ T& ArrayT<T>::operator[](const std::ptrdiff_t idx) {
 template<class T>
 const T& ArrayT<T>::operator[](const std::ptrdiff_t idx) const {
     if (idx < 0 || size_ <= idx) {
-        throw std::invalid_argument("ArrayT::operator[] - invalid index");
+        throw std::invalid_argument("ArrayD::operator[] - invalid index");
     }
     return *(data_.get() + idx);
 }
@@ -100,7 +105,8 @@ void ArrayT<T>::Insert(const std::ptrdiff_t idx, const T& val) {
     }
     Resize(size_ + 1);
     if (idx != Size() - 1) {
-        std::copy_backward(data_.get() + idx, data_.get() + size_ - 1, data_.get() + size_);
+        std::copy_backward(data_.get() + idx,
+            data_.get() + size_ - 1, data_.get() + size_);
     }
     data_[idx] = val;
 }
@@ -112,7 +118,8 @@ void ArrayT<T>::Remove(const std::ptrdiff_t idx) {
     }
     if (idx != size_ - 1) {
         // удаляем НЕ в конце копированием
-        std::copy(data_.get() + idx + 1, data_.get() + size_, data_.get() + idx);
+        std::copy(data_.get() + idx + 1,
+            data_.get() + size_, data_.get() + idx);
     }
     Resize(size_ - 1);
 
