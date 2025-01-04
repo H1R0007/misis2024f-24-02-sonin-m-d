@@ -6,7 +6,7 @@
 class StackL final {
 public:
     using T = std::uint8_t;
-public:
+
     StackL() = default;
 
     StackL(const StackL& src);

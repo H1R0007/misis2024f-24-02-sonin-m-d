@@ -94,20 +94,20 @@ std::istream& Complex::ReadFromStream(std::istream& Rfromstream) noexcept
 	return Rfromstream;
 }
 
-Complex operator+(const Complex& left, const Complex& right) noexcept { return Complex(left) += right; }
-Complex operator+(const Complex& left, const double right) noexcept { return Complex(left) += right; }
-Complex operator+(const double left, const Complex& right) noexcept { return Complex(left) += right; }
+Complex operator+(const Complex& left, const Complex& right) noexcept { return Complex(left) += Complex(right); }
+Complex operator+(const Complex& left, const double right) noexcept { return Complex(left) += Complex(right); }
+Complex operator+(const double left, const Complex& right) noexcept { return Complex(left) += Complex(right); }
 
-Complex operator-(const Complex& left, const Complex& right) noexcept { return Complex(left) -= right; }
-Complex operator-(const Complex& left, const double right) noexcept { return Complex(left) -= right; }
-Complex operator-(const double left, const Complex& right) noexcept { return Complex(left) -= right; }
+Complex operator-(const Complex& left, const Complex& right) noexcept { return Complex(left) -= Complex(right); }
+Complex operator-(const Complex& left, const double right) noexcept { return Complex(left) -= Complex(right); }
+Complex operator-(const double left, const Complex& right) noexcept { return Complex(left) -= Complex(right); }
 
-Complex operator*(const Complex& left, const Complex& right) noexcept { return Complex(left) *= right; }
-Complex operator*(const Complex& left, const double right) noexcept { return Complex(left) *= right; }
-Complex operator*(const double left, const Complex& right) noexcept { return Complex(left) *= right; }
+Complex operator*(const Complex& left, const Complex& right) noexcept { return Complex(left) *= Complex(right); }
+Complex operator*(const Complex& left, const double right) noexcept { return Complex(left) *= Complex(right); }
+Complex operator*(const double left, const Complex& right) noexcept { return Complex(left) *= Complex(right); }
 
-Complex operator/(const Complex& left, const Complex& right) { return Complex(left) /= right; }
-Complex operator/(const Complex& left, const double right) { return Complex(left) /= right; }
-Complex operator/(const double left, const Complex& right) { return Complex(left) /= right; }
+Complex operator/(const Complex& left, const Complex& right) { return Complex(left) /= Complex(right); }
+Complex operator/(const Complex& left, const double right) { return Complex(left) /= Complex(right); }
+Complex operator/(const double left, const Complex& right) { return Complex(left) /= Complex(right); }
 
 //

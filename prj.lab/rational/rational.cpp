@@ -45,7 +45,6 @@ Rational::Rational(const std::int32_t chisl, const std::int32_t znam) : chisl_(c
 	DoRightSign();
 	FractionReduce();
 }
-Rational::Rational(const int32_t chislo) : Rational(chislo, 1) {  }
 
 bool Rational::operator==(const Rational& right) const noexcept {
 	return chisl_ == right.chisl_ && znam_ == right.znam_;
@@ -101,16 +100,15 @@ Rational& Rational::operator+=(const Rational& right) noexcept {
 	}
 	else {
 		int32_t lcm = LCM(znam_, right.znam_);
-		chisl_ *= lcm / znam_;
+		chisl_ = chisl_ * (lcm / znam_) + right.chisl_ * (lcm / right.znam_);
 		znam_ = lcm;
-		chisl_ += right.znam_ * lcm / right.znam_;
 	}
-	FractionReduce();
+	FractionReduce(); // Убеждаемся, что результат упрощен
 	return *this;
 }
 
 Rational& Rational::operator-=(const Rational& right) noexcept {
-	return operator+=(-right);
+	return operator+=(-1 * right);
 }
 
 Rational& Rational::operator*=(const Rational& right) noexcept {
