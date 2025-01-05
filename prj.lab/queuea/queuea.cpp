@@ -106,7 +106,7 @@ void QueueA::Push(const T val) {
             }
             else {
                 std::copy(buf + head_, buf + size_, data_);
-                std::copy(buf, buf + tail_ + 1, data_ + tail_ - head_);
+                std::copy(buf, buf + tail_ + 1,  data_ + tail_ - head_);
             }
             delete[] buf;
             size_ *= 2;

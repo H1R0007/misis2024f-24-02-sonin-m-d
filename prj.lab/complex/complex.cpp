@@ -6,7 +6,7 @@ static const double epsilon = 2 * std::numeric_limits<double>::epsilon();
 
 bool Complex::operator==(const Complex& right) noexcept
 {
-	return (abs(re - right.re < epsilon) && abs(im - right.im < epsilon));
+	return (std::abs(re - right.re) < 2 * epsilon && std::abs(im - right.im) < 2 * epsilon);
 }
 bool Complex::operator!=(const Complex& right) noexcept
 {
